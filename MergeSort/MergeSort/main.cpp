@@ -40,20 +40,13 @@ void Merge(int *ptr , int low , int high , int middle )
         arr[k++] = ptr[j++];
     }
 
-    for(int l = 0 ; l < Size ; l++)
+    for(int l = low ; l <=high ; l++)
     {
 
-        ptr[l] = arr[l];
+        ptr[l] = arr[l-low];
 
     }
 
-
-    for(int l = 0 ; l < Size ; l++)
-    {
-        cout << ptr[l] << " ";
-    }
-
-    cout << endl;
 
 
 
@@ -62,7 +55,7 @@ int* MergeSort(int *ptr, int low , int high)
 {
 int middle = (low+high)/2;;
 
-    if(low != high)
+    if(low < high)
     {
 
         MergeSort(ptr, low, middle);
@@ -119,6 +112,8 @@ int main()
 
    int *ptr = MergeSort(arr,low,high);
 
+
+    cout << "sorted array is : ";
 
 
 
