@@ -218,9 +218,9 @@ void Delete(int number ,Tree *root)
     Tree* node = Searching(number,root);
 
 
-
-
-    if(node->left== nullptr && node->right == nullptr)
+    if(node != nullptr)
+    {
+        if(node->left== nullptr && node->right == nullptr)
     {
         while(true)
         {
@@ -340,6 +340,36 @@ void Delete(int number ,Tree *root)
 
 
     }
+    }
+
+
+    else
+    {
+        cout << "invalid Value , can't delete";
+    }
+
+
+
+}
+
+
+void freespace(Tree* root)
+{
+
+    if(root->right != nullptr)
+    {
+
+        freespace(root->right);
+    }
+
+    if(root->left != nullptr)
+    {
+        freespace(root->left);
+    }
+
+
+    delete root;
+
 
 }
 
@@ -444,11 +474,15 @@ int main()
         else if(option == 5)
         {
             break;
+
+
         }
 
 
 
     }
+
+   freespace(root);
 
 
 
