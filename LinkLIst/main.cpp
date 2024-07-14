@@ -72,7 +72,7 @@ void insertion(Linklist *node)
 
         while(curr!= nullptr)
         {
-            if(value = curr->data)
+            if(value == curr->data)
         {
             break;
         }
@@ -111,12 +111,8 @@ void insertion(Linklist *node)
 
         curr = Head;
 
-        while(curr!= nullptr)
+        while(curr->next != nullptr)
         {
-            if(curr -> next == nullptr)
-        {
-            break;
-        }
 
             curr = curr-> next;
 
