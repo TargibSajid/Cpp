@@ -28,20 +28,56 @@ Heap *Rear = nullptr;
 
 Heap* findParent(Heap *root , Heap *node )
 {
-    if((root->leftChild)->number == node->number || (root->rightChild)->number == node->number)
+    if(root != nullptr)
     {
-        return root;
+        if(node != nullptr)
+        {
+            if((root->leftChild)->number == node->number || (root->rightChild)->number == node->number)
+                {
+                        return root;
+                }
+
+    else if (root->number == node->number)
+    {
+        cout << " no Parents for root element " << endl;
+
+        return nullptr;
     }
 
     else
     {
         findParent(root->nextIndex,node);
     }
+        }
+
+        else
+        {
+            cout << " no parents for null element " << endl;
+
+            return nullptr;
+        }
+
+    }
+
+    else
+    {
+        cout << "the Heap is empty  no parents to found " << endl;
+
+        return nullptr;
+    }
+
 }
 
 Heap *findLast(Heap*root)
 {
-    if(((root->nextIndex)->nextIndex) == nullptr)
+    if(root != nullptr)
+    {
+        if(root->nextIndex == nullptr)
+    {
+        return nullptr;
+    }
+
+    else if(((root->nextIndex)->nextIndex) == nullptr)
     {
 
         return root;
@@ -52,6 +88,15 @@ Heap *findLast(Heap*root)
     {
         findLast(root->nextIndex);
     }
+    }
+
+    else{
+
+        cout << "The Heap is Empty no last Element to found " << endl;
+
+        return nullptr;
+    }
+
 
 }
 
@@ -92,9 +137,13 @@ bool MaxHeapify(Heap *root,bool flag )
 
     if(flag == false)
     {
-       if((root->leftChild)->number >root->number || (root->rightChild)->number > root->number )
+        int k = 0;
+
+       if(root->leftChild != nullptr && root->rightChild !=nullptr)
+       {
+           if((root->leftChild)->number >root->number || (root->rightChild)->number > root->number )
     {
-        int k;
+
 
 
         if((root->leftChild)->number >root->number && (root->rightChild)->number > root->number)
@@ -112,7 +161,7 @@ bool MaxHeapify(Heap *root,bool flag )
 
 
             }
-            else
+            else if((root->rightChild)->number > (root->leftChild)->number)
             {
                 k = root->number;
 
@@ -161,6 +210,32 @@ bool MaxHeapify(Heap *root,bool flag )
 
         return true;
     }
+       }
+
+       else
+       {
+            if((root->leftChild)->number > root->number)
+            {
+            k = root->number;
+
+            root->number = (root->leftChild)->number;
+
+            (root->leftChild)->number = k;
+
+            return flag;
+
+
+            }
+
+            else
+            {
+                return true;
+            }
+
+
+
+
+       }
     }
 
 }
@@ -190,6 +265,13 @@ void Heapify(Heap *root,bool flag)
 
 
 
+
+
+    }
+
+    else
+    {
+        cout << "no element to Heapify the Heap is empty" << endl;
     }
 
 
@@ -272,8 +354,9 @@ Heap* insertingElement(Heap *root,int value)
 
 Heap * deleteWholeHeap(Heap *root)
 {
-
-     while(root != nullptr)
+    if(root != nullptr)
+    {
+        while(root != nullptr)
         {
             Heap *node = root;
 
@@ -289,6 +372,15 @@ Heap * deleteWholeHeap(Heap *root)
 
 
         return nullptr;
+    }
+
+    else
+    {
+        cout << "Heap is already empty no elements to delete ";
+    }
+
+
+
 
 }
 
@@ -296,8 +388,8 @@ Heap * deleteWholeHeap(Heap *root)
 Heap* deleteElement(Heap *root, int value)
 {
 
-
-
+    if(root != nullptr)
+    {
         Heap *node =  findvalue(root,value);
 
 
@@ -307,12 +399,29 @@ Heap* deleteElement(Heap *root, int value)
         if( node != nullptr)
         {
 
-            Heap *Index = findLast(root);
 
-            Heap *PIndex = findParent(root,Index->nextIndex);
+
+
 
             if(root == node)
             {
+                if(root->leftChild == nullptr && root->rightChild == nullptr)
+                {
+                    delete root;
+
+                    return nullptr;
+
+                }
+
+                else
+                {
+                 Heap *Index = findLast(root);
+
+                 if(Index != nullptr)
+                 {
+
+                 Heap *PIndex = findParent(root,Index->nextIndex);
+
                  Heap * LastIndex = Index->nextIndex;
 
                  root->number = LastIndex->number;
@@ -336,13 +445,11 @@ Heap* deleteElement(Heap *root, int value)
 
 
                 return root;
+                 }
 
 
 
-
-
-
-
+                }
 
 
 
@@ -350,11 +457,15 @@ Heap* deleteElement(Heap *root, int value)
 
             else
             {
+                Heap *Index = findLast(root);
+
+                Heap *PIndex = findParent(root,Index->nextIndex);
+
                 Heap *LastIndex = Index->nextIndex;
 
                 node->number = LastIndex->number;
 
-                delete LastIndex ;
+                delete LastIndex;
 
                 Index->nextIndex =  nullptr;
 
@@ -397,7 +508,19 @@ Heap* deleteElement(Heap *root, int value)
         {
             cout << "value not found ... Miss Match !!" << endl;
 
+            return root;
+
         }
+    }
+
+
+    else
+    {
+        cout << "Heap is Empty NO elements to Delete" << endl;
+
+        return nullptr;
+    }
+
 
 
 
@@ -407,9 +530,9 @@ Heap* deleteElement(Heap *root, int value)
 
 void Traversal(Heap *root)
 {
-
-
-    if(root->leftChild!= nullptr)
+    if(root != nullptr)
+    {
+        if(root->leftChild!= nullptr)
     {
          Traversal(root->leftChild);
     }
@@ -422,6 +545,15 @@ void Traversal(Heap *root)
     {
          Traversal(root->rightChild);
     }
+    }
+
+    else
+    {
+        cout << "Heap is empty...!!" << endl;
+
+    }
+
+
 
 
 
@@ -477,7 +609,11 @@ void HeapSort(int *arr , int Size)
     {
         if(root == nullptr)
                         {
+
+
+
                                 root = insertingElement(root,arr[k++]);
+
 
                                 Front = root;
 
@@ -494,8 +630,12 @@ void HeapSort(int *arr , int Size)
 
     cout << "All Elements Inserted Succesfully......." << endl;
 
+    showNodes(root);
 
-    Heapify(root,false);
+
+
+
+
 
     int b = Size-1;
 
@@ -504,28 +644,11 @@ void HeapSort(int *arr , int Size)
     while(b >= 0)
     {
 
-        Heap*Index = findLast(root);
+     Heapify(root,false);
 
-        Heap *LastIndex = Index->nextIndex;
+     arr[b--] = root->number;
 
-        l = LastIndex->number;
-
-        LastIndex->number = root->number;
-
-        root->number = l;
-
-        arr[b--] = LastIndex->number;
-
-        Index->nextIndex = nullptr;
-
-        deleteElement(root,LastIndex->number);
-
-        Heapify(root,false);
-
-
-
-
-
+     deleteElement(root,root->number);
 
     }
 
@@ -659,6 +782,9 @@ int main()
             {
 
                 root = deleteWholeHeap(root);
+
+                Front = nullptr;
+                Rear = nullptr;
 
             }
 
